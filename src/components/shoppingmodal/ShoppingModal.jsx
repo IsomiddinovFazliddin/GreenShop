@@ -4,6 +4,13 @@ import { IoClose } from "react-icons/io5";
 import { Button } from "@mui/material";
 
 function ShoppingModal({ setShoppingModal, cartdata, setCartdata }) {
+  const subTotal = cartdata.reduce(
+    (sum, item) => sum + item.price * item.count,
+    0,
+  );
+  const shipping = 16;
+  const total = subTotal + shipping;
+
   return (
     <>
       <div className="ShoppingModal">
@@ -76,12 +83,16 @@ function ShoppingModal({ setShoppingModal, cartdata, setCartdata }) {
             </div>
             <div className="total">
               <h2>Total</h2>
-              <span>$2,699.00</span>
+              <span>${total.toFixed(2)}</span>
             </div>
             <Button
               className="btn"
               variant="contained"
-              onClick={() => setCartdata([])}
+              onClick={() => {
+                setCartdata([]);
+                setShoppingModal(false);
+                alert("Xaridingiz uchun raxmat");
+              }}
             >
               Track your order
             </Button>
