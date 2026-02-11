@@ -1,0 +1,93 @@
+nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  z-index: 10;
+  .container {
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #46a35880;
+  }
+  ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    a {
+      position: relative;
+      font-weight: 400;
+      font-size: 16px;
+      color: #3d3d3d;
+      transition: all 0.3s ease-in-out;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -23px;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: #46a358;
+        transition: all 0.3s ease-in-out;
+      }
+      &:hover {
+        font-weight: 700;
+      }
+      &:hover::after {
+        width: 100%;
+      }
+      &.active {
+        color: #46a358;
+        font-weight: 700;
+      }
+      &.active::after {
+        width: 100%;
+      }
+    }
+  }
+  .btns {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    svg {
+      color: #3d3d3d;
+      font-size: 22px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        color: #46a358;
+      }
+    }
+    .shop {
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: -2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #46a358;
+        color: white;
+        font-size: 10px;
+        cursor: pointer;
+      }
+    }
+    .loginBtn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background-color: #46a358;
+      color: white;
+      svg {
+        color: white;
+      }
+    }
+  }
+}
