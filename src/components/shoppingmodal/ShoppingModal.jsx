@@ -89,9 +89,14 @@ function ShoppingModal({ setShoppingModal, cartdata, setCartdata }) {
               className="btn"
               variant="contained"
               onClick={() => {
-                setCartdata([]);
-                setShoppingModal(false);
-                alert("Xaridingiz uchun raxmat");
+                if (cartdata.length > 0) {
+                  setCartdata([]);
+                  setShoppingModal(false);
+                  alert("Xaridingiz uchun raxmat");
+                } else {
+                  alert("Sizda hali mahsulotlar yo'q");
+                  setShoppingModal(false);
+                }
               }}
             >
               Track your order
