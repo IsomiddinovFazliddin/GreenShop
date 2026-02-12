@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -23,22 +23,33 @@ import { Button } from "@mui/material";
 import { MdOutlineMail } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import { NavLink, useParams } from "react-router-dom";
+import Product from "../../components/product/Product";
 
 function ProductView({ data, addToCart }) {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-
   const { id } = useParams();
 
   const filterData = data.find((item) => {
     return item.id === Number(id);
   });
 
+  const filterCategory = data?.filter((item) => {
+    return item?.category === filterData?.category;
+  });
+
   const [count, setCount] = useState(1);
-  const [mainImgs, setMainImgs] = useState(filterData.mainImg);
+  const [mainImgs, setMainImgs] = useState(filterData?.mainImg);
   const [heart, setHeart] = useState(false);
+
+  useEffect(() => {
+    setMainImgs(filterData?.mainImg);
+    setCount(1);
+    setHeart(false);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [id]);
 
   return (
     <>
@@ -53,9 +64,10 @@ function ProductView({ data, addToCart }) {
             <div className="card">
               <div className="card-imgs">
                 <div className="smalImgs">
-                  {filterData.imgs.map((item) => {
+                  {filterData?.imgs.map((item, index) => {
                     return (
                       <div
+                        key={index}
                         className="imgs"
                         onClick={() => {
                           setMainImgs(item);
@@ -74,9 +86,9 @@ function ProductView({ data, addToCart }) {
                 </div>
               </div>
               <div className="card-info">
-                <h2>{filterData.title}</h2>
+                <h2>{filterData?.title}</h2>
                 <div className="price">
-                  <h3>${filterData.price}</h3>
+                  <h3>${filterData?.price}</h3>
                   <div className="star">
                     <FaStar />
                     <FaStar />
@@ -87,7 +99,7 @@ function ProductView({ data, addToCart }) {
                   </div>
                 </div>
                 <h4>Short Description:</h4>
-                <p>{filterData.desc}</p>
+                <p>{filterData?.desc}</p>
                 <h4>Size:</h4>
                 <div className="sixeBtns">
                   <button>S</button>
@@ -141,7 +153,7 @@ function ProductView({ data, addToCart }) {
                   SKU: <span>1995751877966</span>
                 </h5>
                 <h5>
-                  Categories: <span>{filterData.category}</span>
+                  Categories: <span>{filterData?.category}</span>
                 </h5>
                 <h5>
                   Tags: <span>Home, Garden, Plants</span>
@@ -219,8 +231,9 @@ function ProductView({ data, addToCart }) {
             <h2>Releted Products</h2>
             <hr />
             <Swiper
+              slidesPerView={3}
               spaceBetween={30}
-              centeredSlides={true}
+              loop={true}
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
@@ -228,127 +241,16 @@ function ProductView({ data, addToCart }) {
               pagination={{
                 clickable: true,
               }}
-              navigation={true}
-              modules={[Autoplay, Pagination, Navigation]}
+              modules={[Autoplay, Pagination]}
               className="mySwiper slider"
             >
-              <SwiperSlide>
-                <div className="content">
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="content">
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="content">
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                  <div className="row">
-                    <div className="imgs">
-                      <img src="/imgs/sliderImg.png" alt="" />
-                    </div>
-                    <h4>Beach Spider Lily</h4>
-                    <span>$129.00</span>
-                  </div>
-                </div>
-              </SwiperSlide>
+              {filterCategory?.map((item) => {
+                return (
+                  <SwiperSlide key={item.id}>
+                    <Product item={item} />
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
           </div>
         </section>

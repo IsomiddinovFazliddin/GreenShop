@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Homepage from "./pages/homepage/Homepage";
@@ -8,11 +8,19 @@ import ProductCart from "./pages/productcart/ProductCart";
 import LoginModal from "./components/loginmodal/LoginModal";
 import ProductCheckout from "./pages/productcheckout/ProductCheckout";
 import ShoppingModal from "./components/shoppingmodal/ShoppingModal";
+import Error from "./pages/error/Error";
 
 function App() {
   const [loginModal, setLoginModal] = useState(false);
   const [shoppingModal, setShoppingModal] = useState(false);
-  const [cartdata, setCartdata] = useState([]);
+  const [cartdata, setCartdata] = useState(() => {
+    try {
+      const saveData = localStorage.getItem("cartData");
+      return saveData ? JSON.parse(saveData) : [];
+    } catch (error) {
+      return [];
+    }
+  });
 
   const [data, setData] = useState([
     {
@@ -320,6 +328,10 @@ function App() {
     setCartdata([...cartdata, obj]);
   };
 
+  useEffect(() => {
+    localStorage.setItem("cartData", JSON.stringify(cartdata));
+  }, [cartdata]);
+
   const del = (id) => {
     const filterData = cartdata.filter((item) => item.id !== id);
     setCartdata(filterData);
@@ -369,6 +381,8 @@ function App() {
               />
             }
           />
+
+          <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
       </BrowserRouter>

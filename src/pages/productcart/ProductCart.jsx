@@ -50,8 +50,8 @@ function ProductCart({ cartdata, setCartdata, del }) {
                 </div>
               </div>
               <div className="content">
-                {cartdata.length > 0 ? (
-                  cartdata.map((item) => {
+                {cartdata?.length > 0 ? (
+                  cartdata?.map((item) => {
                     return (
                       <div className="box">
                         <div className="box-img">

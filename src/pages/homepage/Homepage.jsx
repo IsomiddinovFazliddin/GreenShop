@@ -192,8 +192,10 @@ function Homepage({ data, addToCart }) {
                 </h5>
               </div>
               <div className="card">
-                {data.map((item) => {
-                  return <Product item={item} addToCart={addToCart}/>;
+                {data.map((item, index) => {
+                  return (
+                    <Product key={index} item={item} addToCart={addToCart} />
+                  );
                 })}
               </div>
             </div>

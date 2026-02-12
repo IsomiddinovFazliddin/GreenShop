@@ -7,7 +7,26 @@ import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa6";
 
 function Product({ item, addToCart }) {
-  const [heart, setHeart] = useState(false);
+  const [heart, setHeart] = useState(() => {
+    try {
+      const hearts = JSON.parse(localStorage.getItem("hearts")) || {};
+      return hearts[item.id] || false;
+    } catch {
+      return false;
+    }
+  });
+
+  const toggleHeart = () => {
+  setHeart((prev) => {
+    const newHeart = !prev;
+    try {
+      const hearts = JSON.parse(localStorage.getItem("hearts")) || {};
+      hearts[item.id] = newHeart;
+      localStorage.setItem("hearts", JSON.stringify(hearts));
+    } catch {}
+    return newHeart;
+  });
+};
 
   return (
     <>
@@ -19,7 +38,6 @@ function Product({ item, addToCart }) {
               onClick={(e) => {
                 e.preventDefault();
                 addToCart(item.id);
-                
               }}
             >
               <LuShoppingCart />
@@ -27,7 +45,7 @@ function Product({ item, addToCart }) {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setHeart(!heart);
+                toggleHeart();
               }}
             >
               {heart ? <FaHeart /> : <FaRegHeart />}

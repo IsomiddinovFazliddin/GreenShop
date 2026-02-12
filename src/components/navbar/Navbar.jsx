@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Navbar.scss";
 import { Link, NavLink } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
@@ -22,7 +22,10 @@ function Navbar({ setLoginModal, cartdata }) {
             <FiSearch />
             <Link to={"/productcart"} className="shop">
               <LuShoppingCart />
-              <span>{cartdata.length > 0 ? cartdata?.length : ""}</span>
+              {
+                cartdata?.length > 0 && <span>{cartdata.length}</span>
+              }
+              
             </Link>
             <Button
               className="loginBtn"
